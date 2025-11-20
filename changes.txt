@@ -1,0 +1,31 @@
+b. Database Models / Schemas
+
+Folder: backend/app/models/student.py
+
+from sqlalchemy import Column, String, Integer
+from .db import Base
+
+class Student(Base):
+    __tablename__ = "students"
+    reg_number = Column(String, primary_key=True)
+    name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    class_name = Column(String, nullable=False)
+
+
+Folder: backend/app/schemas/student.py
+
+from pydantic import BaseModel
+
+class StudentCreate(BaseModel):
+    name: str
+    email: str
+    class_name: str
+
+class Student(StudentCreate):
+    reg_number: str
+
+
+Folder: backend/app/services/user_service.py or new student_service.py
+
+Functions to add/get students and generate registration numbers
